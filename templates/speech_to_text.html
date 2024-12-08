@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Speech to Text Converter</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Speech to Text Converter</h1>
+    
+    <input type="file" id="audioFile" accept="audio/*" />
+    
+    <button onclick="transcribeAudio()">Transcribe</button>
+    
+    <h2>Transcription:</h2>
+    <textarea id="transcriptionText" readonly placeholder="Transcription will appear here"></textarea>
+
+    <script>
+        function transcribeAudio() {
+            const audioFile = document.getElementById('audioFile').files[0];
+            
+            if (!audioFile) {
+                alert('Please select an audio file');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('audio', audioFile);
+
+            axios.post('/speech-to-text', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(response => {
+                document.getElementById('transcriptionText').value = response.data.transcription;
+            })
+            .catch(error => {
+                console.error('Transcription error:', error);
+                alert('Transcription failed. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

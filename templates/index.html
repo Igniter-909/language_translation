@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Language Translator</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        select, button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Language Translator</h1>
+    <textarea id="inputText" placeholder="Enter text to translate"></textarea>
+    
+    <div>
+        <label>Source Language:</label>
+        <select id="sourceLang">
+            <option value="english">English</option>
+        </select>
+    </div>
+    
+    <div>
+        <label>Target Language:</label>
+        <select id="targetLang">
+            <option value="hindi">Hindi</option>
+            <option value="malayalam">Malayalam</option>
+            <option value="telugu">Telugu</option>
+        </select>
+    </div>
+    
+    <button onclick="translateText()">Translate</button>
+    
+    <h2>Translation:</h2>
+    <textarea id="outputText" readonly placeholder="Translation will appear here"></textarea>
+
+    <script>
+        function translateText() {
+            const text = document.getElementById('inputText').value;
+            const sourceLang = document.getElementById('sourceLang').value;
+            const targetLang = document.getElementById('targetLang').value;
+
+            axios.post('/translate', {
+                text: text,
+                source_lang: sourceLang,
+                target_lang: targetLang
+            })
+            .then(response => {
+                document.getElementById('outputText').value = response.data.translated_text;
+            })
+            .catch(error => {
+                console.error('Translation error:', error);
+                alert('Translation failed. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

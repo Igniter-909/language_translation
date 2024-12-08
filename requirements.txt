@@ -1,0 +1,10 @@
+flask
+torch
+transformers
+sentencepiece
+opencv-python-headless
+pytesseract
+pillow
+python-multipart
+openai-whisper
+numpy
