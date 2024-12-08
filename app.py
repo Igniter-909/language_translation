@@ -209,5 +209,5 @@ if __name__ == '__main__':
     app.run(
         host='0.0.0.0',  # Listen on all available interfaces
         port=5000,       # Standard Flask development port
-        debug=True       # Enable debug mode
+        debug=False       # Enable debug mode
     )
